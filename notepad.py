@@ -50,6 +50,10 @@ class App(QMainWindow):
 
         wklejAction = QAction(QIcon('wklej.png'), 'Wklej', self)
         #TODO
+
+        zaznaczWszystkoAction = QAction(QIcon('zaznaczWszystko.png'), 'Zaznacz Wszystko', self)
+        zaznaczWszystkoAction.setShortcut(QKeySequence('Ctrl+A'))
+        zaznaczWszystkoAction.triggered.connect(self.zaznaczWszystkoFun)
         
         self.toolbar = self.addToolBar('ToolBar')
         self.toolbar.addAction(nowyAction)
@@ -76,6 +80,7 @@ class App(QMainWindow):
         edycjaMenu.addAction(wytnijAction)
         edycjaMenu.addAction(skopiujAction)
         edycjaMenu.addAction(wklejAction)
+        edycjaMenu.addAction(zaznaczWszystkoAction)
 
         self.mid = Mid()
         self.setCentralWidget(self.mid)
@@ -140,6 +145,10 @@ class App(QMainWindow):
     def wklejFun(self):
         self.mid.text.paste()
         self.ostatniaAkcja.setText("Wklejono tekst")
+
+    def zaznaczWszystkoFun(self):
+        self.mid.text.selectAll()
+        self.ostatniaAkcja.setText("Zaznaczono wszystko")
         
 class Mid(QtWidgets.QDialog):
     def __init__(self, parent=None):
