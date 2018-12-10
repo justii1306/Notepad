@@ -11,7 +11,7 @@ class App(QMainWindow):
         self.initUI()
  
     def initUI(self):
-        self.setWindowIcon(QIcon('totalcmd.png'))
+        self.setWindowIcon(QIcon('notepad.png'))
         self.setWindowTitle("Notatnik")
 
         self.filename = ""
@@ -29,27 +29,32 @@ class App(QMainWindow):
         otworzAction.triggered.connect(self.otworzFun)
                                  
         zapiszAction = QAction(QIcon('zapisz.png'), 'Zapisz', self)
-        #TODO
+        zapiszAction.setShortcut(QKeySequence('Ctrl+S'))
+        zapiszAction.triggered.connect(self.zapiszFun)
 
         zapiszJakoAction = QAction(QIcon('zapiszJako.png'), 'Zapisz jako', self)
-        #TODO
+        zapiszJakoAction.setShortcut(QKeySequence('Shift+Ctrl+S'))
+        zapiszJakoAction.triggered.connect(self.zapiszJakoFun)
 
         cofnijAction = QAction(QIcon('cofnij.png'), 'Cofnij', self)
         cofnijAction.setShortcut(QKeySequence('Ctrl+Z'))
         cofnijAction.triggered.connect(self.cofnijFun)
 
         ponowAction = QAction(QIcon('ponow.png'), 'Ponow', self)
-        #TODO
+        ponowAction.setShortcut(QKeySequence('Ctrl+Y'))
+        ponowAction.triggered.connect(self.ponowFun)
 
         wytnijAction = QAction(QIcon('wytnij.png'), 'Wytnij', self)
         wytnijAction.setShortcut(QKeySequence('Ctrl+X'))
         wytnijAction.triggered.connect(self.wytnijFun)
 
         skopiujAction = QAction(QIcon('skopiuj.png'), 'Skopiuj', self)
-        #TODO
+        skopiujAction.setShortcut(QKeySequence('Ctrl+C'))
+        skopiujAction.triggered.connect(self.skopiujFun)
 
         wklejAction = QAction(QIcon('wklej.png'), 'Wklej', self)
-        #TODO
+        wklejAction.setShortcut(QKeySequence('Ctrl+V'))
+        wklejAction.triggered.connect(self.wklejFun)
 
         zaznaczWszystkoAction = QAction(QIcon('zaznaczWszystko.png'), 'Zaznacz Wszystko', self)
         zaznaczWszystkoAction.setShortcut(QKeySequence('Ctrl+A'))
@@ -74,9 +79,6 @@ class App(QMainWindow):
         plikMenu.addAction(zapiszAction)
         plikMenu.addAction(zapiszJakoAction)
 
-        edycjaMenu.addAction(cofnijAction)
-        edycjaMenu.addAction(ponowAction)
-        edycjaMenu.addSeparator()
         edycjaMenu.addAction(wytnijAction)
         edycjaMenu.addAction(skopiujAction)
         edycjaMenu.addAction(wklejAction)
@@ -155,20 +157,16 @@ class Mid(QtWidgets.QDialog):
         super(Mid, self).__init__(parent)
         mainLayout = QtWidgets.QHBoxLayout()
 
-        #--Options - Left Panel
         self.optionsWidget = QWidget()
         self.options = QtWidgets.QVBoxLayout()
 
-        #-FontSize - ComboBox
         self.sizeComboBox = QtWidgets.QComboBox()
         self.sizeComboBox.addItem("10")
         self.sizeComboBox.addItem("12")
         self.sizeComboBox.addItem("14")
         self.sizeComboBox.currentIndexChanged.connect(self.sizeselectionchange)
         self.options.addWidget(self.sizeComboBox)
-        #-END FontSize - ComboBox
 
-        #-FontFamily - RadioButton
         self.timesNewRoman = QtWidgets.QRadioButton("Times New Roman")
         self.timesNewRoman.setChecked(True)
         self.timesNewRoman.toggled.connect(lambda:self.buttonstate(self.timesNewRoman))
@@ -179,9 +177,7 @@ class Mid(QtWidgets.QDialog):
         self.options.addWidget(self.timesNewRoman)
         self.options.addWidget(self.arial)
         self.options.addWidget(self.courierNew)
-        #-END FontFamily - RadioButton
 
-        #-BackgrounColour - GridLayout
         self.colorWidget = QWidget()
         self.colorGrid = QtWidgets.QGridLayout()
         
@@ -203,36 +199,123 @@ class Mid(QtWidgets.QDialog):
         self.blue = QtWidgets.QPushButton()
         self.blue.setStyleSheet("background-color: blue")
         self.blue.setMaximumSize(10, 10)
-        #TODO clicked.connect
+        self.blue.clicked.connect(lambda: self.colorchange("blue"))
 
         self.green = QtWidgets.QPushButton()
         self.green.setStyleSheet("background-color: green")
         self.green.setMaximumSize(10, 10)
-        #TODO clicked.connect
+        self.green.clicked.connect(lambda: self.colorchange("green"))
+
+        self.pink = QtWidgets.QPushButton()
+        self.pink.setStyleSheet("background-color: pink")
+        self.pink.setMaximumSize(10, 10)
+        self.pink.clicked.connect(lambda: self.colorchange("pink"))
+
+        self.yellow = QtWidgets.QPushButton()
+        self.yellow.setStyleSheet("background-color: yellow")
+        self.yellow.setMaximumSize(10, 10)
+        self.yellow.clicked.connect(lambda: self.colorchange("yellow"))
+
+        self.grey = QtWidgets.QPushButton()
+        self.grey.setStyleSheet("background-color: grey")
+        self.grey.setMaximumSize(10, 10)
+        self.grey.clicked.connect(lambda: self.colorchange("grey"))
+
+        self.purple = QtWidgets.QPushButton()
+        self.purple.setStyleSheet("background-color: purple")
+        self.purple.setMaximumSize(10, 10)
+        self.purple.clicked.connect(lambda: self.colorchange("purple"))
         
+        self.orange = QtWidgets.QPushButton()
+        self.orange.setStyleSheet("background-color: orange")
+        self.orange.setMaximumSize(10, 10)
+        self.orange.clicked.connect(lambda: self.colorchange("orange"))
+
+        self.darkgreen = QtWidgets.QPushButton()
+        self.darkgreen.setStyleSheet("background-color: darkgreen")
+        self.darkgreen.setMaximumSize(10, 10)
+        self.darkgreen.clicked.connect(lambda: self.colorchange("darkgreen"))
+
+        self.darkgrey = QtWidgets.QPushButton()
+        self.darkgrey.setStyleSheet("background-color: darkgrey")
+        self.darkgrey.setMaximumSize(10, 10)
+        self.darkgrey.clicked.connect(lambda: self.colorchange("darkgrey"))
+
+        self.chocolate = QtWidgets.QPushButton()
+        self.chocolate.setStyleSheet("background-color: chocolate")
+        self.chocolate.setMaximumSize(10, 10)
+        self.chocolate.clicked.connect(lambda: self.colorchange("chocolate"))
+
+        self.brown = QtWidgets.QPushButton()
+        self.brown.setStyleSheet("background-color: brown")
+        self.brown.setMaximumSize(10, 10)
+        self.brown.clicked.connect(lambda: self.colorchange("brown"))
+
+        self.khaki = QtWidgets.QPushButton()
+        self.khaki.setStyleSheet("background-color: khaki")
+        self.khaki.setMaximumSize(10, 10)
+        self.khaki.clicked.connect(lambda: self.colorchange("khaki"))
+
+        self.lavender = QtWidgets.QPushButton()
+        self.lavender.setStyleSheet("background-color: lavender")
+        self.lavender.setMaximumSize(10, 10)
+        self.lavender.clicked.connect(lambda: self.colorchange("lavender"))
+
+        self.magenta = QtWidgets.QPushButton()
+        self.magenta.setStyleSheet("background-color: magenta")
+        self.magenta.setMaximumSize(10, 10)
+        self.magenta.clicked.connect(lambda: self.colorchange("magenta"))
+
+        self.aqua = QtWidgets.QPushButton()
+        self.aqua.setStyleSheet("background-color: aqua")
+        self.aqua.setMaximumSize(10, 10)
+        self.aqua.clicked.connect(lambda: self.colorchange("aqua"))
+
+        self.gold = QtWidgets.QPushButton()
+        self.gold.setStyleSheet("background-color: gold")
+        self.gold.setMaximumSize(10, 10)
+        self.gold.clicked.connect(lambda: self.colorchange("gold"))
+
+        self.lightskyblue = QtWidgets.QPushButton()
+        self.lightskyblue.setStyleSheet("background-color: lightskyblue")
+        self.lightskyblue.setMaximumSize(10, 10)
+        self.lightskyblue.clicked.connect(lambda: self.colorchange("lightskyblue"))
+
         self.colorGrid.addWidget(self.black,0,0)
         self.colorGrid.addWidget(self.white,0,1)
         self.colorGrid.addWidget(self.red,0,2)
         self.colorGrid.addWidget(self.blue,0,3)
         self.colorGrid.addWidget(self.green,0,4)
+        self.colorGrid.addWidget(self.pink,1,0)
+        self.colorGrid.addWidget(self.yellow,1,1)
+        self.colorGrid.addWidget(self.grey,1,2)
+        self.colorGrid.addWidget(self.purple,1,3)
+        self.colorGrid.addWidget(self.orange,1,4)
+        self.colorGrid.addWidget(self.darkgrey,2,0)
+        self.colorGrid.addWidget(self.chocolate,2,1)
+        self.colorGrid.addWidget(self.brown,2,2)
+        self.colorGrid.addWidget(self.khaki,2,3)
+        self.colorGrid.addWidget(self.darkgreen,2,4)
+        self.colorGrid.addWidget(self.lavender,3,0)
+        self.colorGrid.addWidget(self.magenta,3,1)
+        self.colorGrid.addWidget(self.aqua,3,2)
+        self.colorGrid.addWidget(self.gold,3,3)
+        self.colorGrid.addWidget(self.lightskyblue,3,4)
+    
         
         self.colorWidget.setLayout(self.colorGrid)
         self.options.addWidget(self.colorWidget)
-        #-END BackgrounColour - GridLayout
         
         self.options.setAlignment(QtCore.Qt.AlignTop)
         self.optionsWidget.setLayout(self.options)
         mainLayout.addWidget(self.optionsWidget)
-        #--Options - Left Panel END
 
-        #Text - Right Panel
         self.text = QtWidgets.QTextEdit()
         
         self.text.setFontFamily("Times New Roman")
         self.text.setFontPointSize(10)
         
         mainLayout.addWidget(self.text)
-        #Text - Right Panel END
 
         self.setLayout(mainLayout)
 
@@ -249,7 +332,9 @@ class Mid(QtWidgets.QDialog):
             if b.isChecked() == True:
                 self.text.setFontFamily("Arial")
 
-        #TODO Courier New
+        if b.text() == "Courier New":
+            if b.isChecked() == True:
+                self.text.setFontFamily("Courier New")
 
     def colorchange(self,color):
         styleSheet = "background-color: " + color
